@@ -1,6 +1,7 @@
 import { Button, useForkRef } from "@mui/material";
 import axios from "axios";
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
@@ -9,12 +10,20 @@ import MultiField from "../../components/Form/MultiplyFields";
 function BlogUpdate(props) {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [blog,setBlog]=useState({})
  
-  const [blog,setBlog]=useState()
-  axios.get("http://localhost:5000/blog/" + id).then((res) => {
-    setBlog(res.data);
-    
-  });
+  useEffect( () => {
+    async function fetchBlog(){
+      await axios.get("http://localhost:5000/blog/" + id)
+      .then((res) => {
+        setBlog(res.data);
+            
+      });
+     
+    }
+    fetchBlog()
+   
+  }, [])
 
  
   const form = useForm({
@@ -40,36 +49,34 @@ function BlogUpdate(props) {
      
     }
   };
-  if(setBlog){
-    return (
-      <div>
-        <form onSubmit={form.handleSubmit(handle)}>
-          
-          <InputField
-            name="title"
-            label="Tieu de blog"
-            form={form}
-            value={blog.title}
-          />
-          <MultiField
-            name="content"
-            label="Noi dung"
-            form={form}
-            value={blog.content}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            sx={{ m: "20px 0px 2px 0px" }}
-            type="submit"
-          >
-            Upload
-          </Button>
-        </form>
-      </div>
-    );  
-  }
+  return (
+    <div>
+      <form onSubmit={form.handleSubmit(handle)}>
+        <InputField
+          name="title"
+          label="Tieu de blog"
+          form={form}
+          value={blog.title}
+        />
+        <MultiField
+          name="content"
+          label="Noi dung"
+          form={form}
+          value={blog.content}
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          fullWidth
+          sx={{ m: "20px 0px 2px 0px" }}
+          type="submit"
+        >
+          Upload
+        </Button>
+      </form>
+    </div>
+  );  
+  
   
 }
 export default BlogUpdate;
