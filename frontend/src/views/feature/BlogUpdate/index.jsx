@@ -1,4 +1,4 @@
-import { Button, useForkRef } from "@mui/material";
+import { Button, TextField, useForkRef } from "@mui/material";
 import axios from "axios";
 import React from "react";
 import { useEffect } from "react";
@@ -11,21 +11,7 @@ function BlogUpdate(props) {
   const { id } = useParams();
   const navigate = useNavigate();
   const [blog,setBlog]=useState({})
- 
-  useEffect( () => {
-    async function fetchBlog(){
-      await axios.get("http://localhost:5000/blog/" + id)
-      .then((res) => {
-        setBlog(res.data);
-            
-      });
-     
-    }
-    fetchBlog()
-   
-  }, [])
-
- 
+  
   const form = useForm({
     defaultValues: {
       title: "",
@@ -33,6 +19,25 @@ function BlogUpdate(props) {
     },
     
   });
+  useEffect( () => {
+    async function fetchBlog(){
+      await axios.get("http://localhost:5000/blog/" + id)
+      .then((res) => {
+        setBlog(res.data);
+      });
+     
+    }
+    fetchBlog()
+  }, [])
+  useEffect(()=>{
+    if(blog){
+      form.setValue('title',blog.title)
+      form.setValue('content',blog.content)
+      console.log(form.getValues('title'))
+    }
+
+  },[blog])
+ 
   const handle = (values) => {
     
     if (values) {
@@ -50,6 +55,7 @@ function BlogUpdate(props) {
     }
   };
   return (
+
     <div>
       <form onSubmit={form.handleSubmit(handle)}>
         <InputField
@@ -64,6 +70,8 @@ function BlogUpdate(props) {
           form={form}
           value={blog.content}
         />
+        
+          
         <Button
           variant="contained"
           color="primary"

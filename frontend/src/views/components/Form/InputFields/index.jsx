@@ -1,7 +1,7 @@
 import { TextField } from '@mui/material';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Controller } from 'react-hook-form';
+import { Controller, useWatch } from 'react-hook-form';
 
 InputField.propTypes = {
     form: PropTypes.object.isRequired,
@@ -23,13 +23,11 @@ function InputField(props) {
         <Controller
             control={form.control}
             name={name}
-            disabled={disabled}
             render={({field, fieldState: {error}}) => (
                 <TextField
                 {...field}
                 label={label}
                 error={!!error}
-                value={val}
                 onInput={(e)=>setVal(handleInput(e))}
                 fullWidth
                 variant={'outlined'}

@@ -25,7 +25,6 @@ function MultiField(props) {
                 {...field}
                 label={label}
                 error={!!error}
-                value={val}
                 onInput={(e)=>setVal(e.target.value)}
                 fullWidth
                 variant={'outlined'}
