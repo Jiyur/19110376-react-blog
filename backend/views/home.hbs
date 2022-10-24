@@ -1,0 +1,28 @@
+<h2>Danh sách blog hiện có</h2>
+<div>
+    List:
+   {{#each blogs}}
+   {{#if this.title}}
+    <div class="card w-50">
+      <div class="card-body">
+        <h5 class="card-title">{{this.title}}
+        <a href="/blog/{{this._id}}" class="btn btn-primary float-right" style="margin-top: 15px;">Xem</a>
+
+
+        </h5>
+        
+        <a href="/blog/{{this._id}}/delete" class="btn btn-danger">Xoá</a>
+        <a href="/blog/{{this._id}}/update-blog" class="btn btn-success">Sửa</a>
+
+
+      </div>
+    </div>
+    {{/if}}
+  {{/each}}
+
+</div>
+<div style="margin-top:2%">
+    <h3>Nhấn vào đây để tạo blog mới</h3>
+    <a href="/create-form" class="btn btn-success">Tạo blog</a>
+    
+</div>
