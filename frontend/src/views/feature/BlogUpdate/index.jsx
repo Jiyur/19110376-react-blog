@@ -33,7 +33,6 @@ function BlogUpdate(props) {
     if(blog){
       form.setValue('title',blog.title)
       form.setValue('content',blog.content)
-      console.log(form.getValues('title'))
     }
 
   },[blog])
